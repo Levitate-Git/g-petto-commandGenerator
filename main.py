@@ -7,7 +7,7 @@ from CustomModules import global_vars
 
 
 
-getting_ID = global_vars.webApp
+getting_ID = global_vars.webApp()
 board_ID = sys.argv[1]
 rev_Id = sys.argv[2]
 input_path = ("/tmp/boards/" + board_ID + "/inputs/")

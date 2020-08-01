@@ -33,7 +33,7 @@ def main(mot_coords,stopped_frames, usage, np_paths, delta_ts, num_of_frames, ma
         first_motor_number : name that is using for generating txt file
     """
     error_occured = False
-    getting_ID = global_vars.webApp
+    getting_ID = global_vars.webApp()
     Ids = getting_ID.back()
     input_path= Ids[2]
     rev_Id = Ids[1]
