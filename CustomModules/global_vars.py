@@ -35,12 +35,14 @@ DELTA_LENGTH = 0.02 #m
 MAX_SPEED_IN_METERS = 0.62 #m/s
 MIN_SPEED_IN_METERS = -0.62 #m/s
 
+
+"""
 class webApp:
   def __init__(self):
-    self._board_id = float(0)                      
-    self._rev_id = float(0)                        
-    self._input_path = float(0)                    
-    self._output_path = float(0)
+    self._board_id = ""                    
+    self._rev_id = ""                       
+    self._input_path = ""                
+    self._output_path = ""
     self.Ids=[] 
   def define_paths(self, board_ID,rev_Id, input_path, output_path):
     self._board_id = board_ID      
@@ -48,8 +50,9 @@ class webApp:
     self._input_path = input_path
     self._output_path = output_path
   def back(self):
-    self.Ids.insert(self._board_id)
-    self.Ids.insert(self._rev_id)
-    self.Ids.insert(self._input_path)
-    self.Ids.insert(self.output_path)
+    self.Ids.append(self._board_id)
+    self.Ids.append(self._rev_id)
+    self.Ids.append(self._input_path)
+    self.Ids.append(self._output_path)
     return self.Ids
+"""

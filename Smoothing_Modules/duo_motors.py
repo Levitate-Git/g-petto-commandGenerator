@@ -5,6 +5,7 @@ from CustomModules import global_vars
 import main_smoothing 
 import rope_parameter_preparation
 import motor_parameters_preperation
+import sys
 
 def main(mot_coords,stopped_frames, usage, np_paths, delta_ts, num_of_frames, max_x, max_z, duo_duo = False, first_motor_number = None):
     """
@@ -33,12 +34,12 @@ def main(mot_coords,stopped_frames, usage, np_paths, delta_ts, num_of_frames, ma
         first_motor_number : name that is using for generating txt file
     """
     error_occured = False
-    getting_ID = global_vars.webApp()
-    Ids = getting_ID.back()
-    input_path= Ids[2]
-    rev_Id = Ids[1]
-    output_path = Ids[3]
-    
+
+
+    board_ID = sys.argv[1]
+    rev_Id = sys.argv[2]
+    input_path = ("/tmp/boards/" + board_ID + "/inputs/")
+    output_path = ("/tmp/boards/" + board_ID + "/outputs/")    
     # First, determine the paths according to the usage and than make a spline from 2D Path
     try:
         if usage == "1001":

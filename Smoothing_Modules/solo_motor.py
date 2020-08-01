@@ -5,6 +5,7 @@ from CustomModules import global_vars
 import main_smoothing 
 import rope_parameter_preparation
 import motor_parameters_preperation
+import sys
 
 def main(motor_coord,stopped_frames, usage, path, delta_ts, num_of_frames, max_x, max_z,motorname):
     """
@@ -31,6 +32,11 @@ def main(motor_coord,stopped_frames, usage, path, delta_ts, num_of_frames, max_x
         motorname : name that is using for generating txt file
     """
     error_occured = False
+    board_ID = sys.argv[1]
+    rev_Id = sys.argv[2]
+    input_path = ("/tmp/boards/" + board_ID + "/inputs/")
+    output_path = ("/tmp/boards/" + board_ID + "/outputs/") 
+    
     # First, determine the paths according to the usage and than make a spline from 2D Path
     try:
         x_point_1d , z_point_1d , list_positions = d1_smoothing.populate_path(path,motor_coord)
