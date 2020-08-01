@@ -114,7 +114,7 @@ def main(motor_coord,stopped_frames, usage, path, delta_ts, num_of_frames, max_x
     
     # Tenth, writing motor parameters to txt files.
     try:
-        motor_parameters_preperation.writing_motor_params(usage,motor_parameters_for_motor_1, file_name = (input_path + rev_Id + "-" + motorname))
+        motor_parameters_preperation.writing_motor_params(usage,motor_parameters_for_motor_1, file_name = motorname)
     except Exception as e:
         error_occured = e
         print("writing_motor_params for rope1 function FAILED in solo_motor")
