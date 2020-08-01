@@ -5,7 +5,7 @@ from CustomModules import global_vars
 from Smoothing_Modules import duo_motors, solo_motor
 
 getting_ID = global_vars.webApp
-Ids = getting_ID.back
+Ids = getting_ID.back()
 input_path = Ids[2]
 rev_Id = Ids[1]
 
