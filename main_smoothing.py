@@ -4,8 +4,10 @@ from scipy import interpolate
 from CustomModules import global_vars
 from Smoothing_Modules import duo_motors, solo_motor
 
-input_path = global_vars.INPUT_PATH
-rev_Id = global_vars.REV_ID
+getting_ID = global_vars.webApp
+Ids = getting_ID.back
+input_path = Ids[2]
+rev_Id = Ids[1]
 
 
 def read_user_input():

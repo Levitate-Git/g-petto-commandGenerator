@@ -1,9 +1,11 @@
 import json
 from CustomModules import global_vars
 
-input_path= global_vars.INPUT_PATH
-rev_Id = global_vars.REV_ID
-output_path = global_vars.OUTPUT_PATH
+getting_ID = global_vars.webApp
+Ids = getting_ID.back()
+input_path= Ids[2]
+rev_Id = Ids[1]
+output_path = Ids[3]
 
 def writing_json_file(total_frame_amount,combination, frame_amount, all_motor_parameters, file_name="levitate"):
     if total_frame_amount % 100 != 0:

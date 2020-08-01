@@ -33,7 +33,12 @@ def main(mot_coords,stopped_frames, usage, np_paths, delta_ts, num_of_frames, ma
         first_motor_number : name that is using for generating txt file
     """
     error_occured = False
-
+    getting_ID = global_vars.webApp
+    Ids = getting_ID.back()
+    input_path= Ids[2]
+    rev_Id = Ids[1]
+    output_path = Ids[3]
+    
     # First, determine the paths according to the usage and than make a spline from 2D Path
     try:
         if usage == "1001":
@@ -249,7 +254,7 @@ def main(mot_coords,stopped_frames, usage, np_paths, delta_ts, num_of_frames, ma
         if duo_duo:
             motorname = "Motor" + str(int(first_motor_number)) + ".txt"
 
-        motor_parameters_preperation.writing_motor_params(usage,motor_parameters_for_motor_1, file_name = motorname)
+        motor_parameters_preperation.writing_motor_params(usage,motor_parameters_for_motor_1, file_name = (input_path + rev_Id + "-" + motorname))
     except Exception as e:
         error_occured = e
         print("writing_motor_params for rope1 function FAILED in duo_motor")
@@ -267,7 +272,7 @@ def main(mot_coords,stopped_frames, usage, np_paths, delta_ts, num_of_frames, ma
         if duo_duo:
             motorname = "Motor" + str(int(first_motor_number+1)) + ".txt"
 
-        motor_parameters_preperation.writing_motor_params(usage,motor_parameters_for_motor_2, file_name = motorname)
+        motor_parameters_preperation.writing_motor_params(usage,motor_parameters_for_motor_2, file_name = (input_path + rev_Id + "-" + motorname))
     except Exception as e:
         error_occured = e
         print("writing_motor_params for rope2 function FAILED in duo_motor")

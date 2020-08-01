@@ -1,6 +1,8 @@
 from CustomModules import global_vars
 import math
 
+
+
 def motor_parameters_preperation(rope_parameters,time):
     makara_radius = global_vars.MAKARA_RADIUS
     pi = global_vars.PI

@@ -46,3 +46,5 @@ class webApp()
     self._rev_id = rev_Id
     self._input_path = input_path
     self._output_path = output_path
+  def back():
+    return self._board_id, self._rev_id, self._input_path, self.output_path
