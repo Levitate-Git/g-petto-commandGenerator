@@ -35,7 +35,14 @@ DELTA_LENGTH = 0.02 #m
 MAX_SPEED_IN_METERS = 0.62 #m/s
 MIN_SPEED_IN_METERS = -0.62 #m/s
 
-BOARD_ID = ""
-REV_ID = ""
-INPUT_PATH = ""
-OUTPUT_PATH = ""
+class webApp() 
+  def __init__(self):
+    self._board_id = float(0)                      
+    self._rev_id = float(0)                        
+    self._input_path = float(0)                    
+    self._output_path = float(0) 
+  def define_paths(board_ID,rev_Id, input_path, output_path):
+    self._board_id = board_ID      
+    self._rev_id = rev_Id
+    self._input_path = input_path
+    self._output_path = output_path

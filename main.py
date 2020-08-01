@@ -7,10 +7,13 @@ from CustomModules import global_vars
 
 
 
-global_vars.BOARD_ID = sys.argv[1];
-global_vars.REV_ID  = sys.argv[2];
-global_vars.INPUT_PATH  = ("/tmp/boards/" + global_vars.BOARD_ID + "/inputs/")
-global_vars.OUTPUT_PATH = ("/tmp/boards/" + global_vars.BOARD_ID + "/outputs/")
+getting_ID = global_vars.webApp
+board_ID = sys.argv[1]
+rev_Id = sys.argv[2]
+input_path = ("/tmp/boards/" + board_ID + "/inputs/")
+output_path = ("/tmp/boards/" + board_ID + "/outputs/")
+
+getting_ID.define_paths(board_ID,rev_Id, input_path, output_path)
 
 
 def main():
