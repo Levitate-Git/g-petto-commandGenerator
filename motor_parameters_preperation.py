@@ -47,17 +47,16 @@ def motor_parameters_preperation(rope_parameters,time):
     
     for i in range(len(step_values)):
         try:
-            temp = int((125000/velocities_in_sps[i])-1)
+            if velocities_in_sps[i] <=2 and velocities_in_sps[i] > 0 :
+                temp = int((125000/2)-1)
+            else:
+                temp = int((125000/velocities_in_sps[i])-1)
         except ZeroDivisionError:
             temp = 0
             if i == 0:
                 temp = int((125000)-1)
             else:
                 directions[i] = -int((abs(time[i]-time[i-1]))*1000)
-        if velocities_in_sps[i] <=2:
-            temp = 2
-            if velocities_in_sps[i] == 0:
-                temp = 0
             
         motor_parameters.append((step_values[i],temp,directions[i]))
     
