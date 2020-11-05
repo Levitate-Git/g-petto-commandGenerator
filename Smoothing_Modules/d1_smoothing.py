@@ -180,7 +180,7 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
                                                
                     
                 
-                if stopped_frames[0] == s+1:
+                if len(stopped_frames) > 0 and stopped_frames[0] == s+1:
                     end_velocity = float(0) # Because there is a stop frame after this frame end_velocity assigned as zero.
                     times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions, end_velocity,time_vs_u,xs,zs)
                     s += 1
@@ -205,8 +205,8 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
             if cont:
                 times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions,end_velocity,time_vs_u,xs,zs)
                 s += 1
-            if frame_counter_control:
-                s += 1
+            #if frame_counter_control:
+             #   s += 1
             i += 1
             enter = False
         # Last user inputted frame

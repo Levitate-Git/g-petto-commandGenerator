@@ -3,13 +3,19 @@ import numpy as np
 from scipy import interpolate
 from CustomModules import global_vars
 from Smoothing_Modules import duo_motors, solo_motor
-import sys
 
-board_ID = sys.argv[1]
-rev_Id = sys.argv[2]
-input_path = ("/tmp/boards/" + board_ID + "/inputs/")
-output_path = ("/tmp/boards/" + board_ID + "/outputs/")
-
+on_off = global_vars.OFFLINE_ONLINE 
+if on_off:
+    import sys
+    board_ID = sys.argv[1]
+    rev_Id = sys.argv[2]
+    input_path = ("/tmp/boards/" + board_ID + "/inputs/")
+    output_path = ("/tmp/boards/" + board_ID + "/outputs/")
+else:
+    board_ID = ""
+    rev_Id = "1"
+    input_path = ""
+    output_path = ""
 
 def read_user_input():
     """

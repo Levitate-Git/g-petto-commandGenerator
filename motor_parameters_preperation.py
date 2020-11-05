@@ -61,10 +61,22 @@ def motor_parameters_preperation(rope_parameters,time):
         motor_parameters.append((step_values[i],temp,directions[i]))
     
     if step_values[0] > step_values[-1]:
-        temp = int(125000/velocities_in_sps[1]-1)
+        try:
+            temp = int(125000/velocities_in_sps[1]-1)
+        except ZeroDivisionError:
+            zero = 1
+            while velocities_in_sps[zero] == 0:
+                zero += 1
+            temp = int(125000/velocities_in_sps[zero]-1)
         motor_parameters.append((step_values[0],temp,1))
     elif step_values[0] < step_values[-1]:
-        temp = int(125000/velocities_in_sps[1]-1)
+        try:
+            temp = int(125000/velocities_in_sps[1]-1)
+        except ZeroDivisionError:
+            zero = 1
+            while velocities_in_sps[zero] == 0:
+                zero += 1
+            temp = int(125000/velocities_in_sps[zero]-1)
         motor_parameters.append((step_values[0],temp,0))
     
     del temp
