@@ -141,24 +141,63 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
         times_and_velocities_for_end_effector : gives the list of time passed and velocities for end effector at each sub-frame
     
     """
-    
+    #Adding stopped_frames to list_positions
+    count_list_position = 1
+    temp_list_positions =[]
+    for pos in list_positions:
+        temp_list_positions.append(pos)
+    old_st_frame = 0
+    elem = temp_list_positions.pop(0)
+    i = 0
+    while i <len(stopped_frames):
+        if i == 0 and stopped_frames[i] == 0:
+            list_positions.insert(0,0)
+            i += 1
+            while (stopped_frames[i]-stopped_frames[i-1]) == 1:
+                list_positions.insert(0,0)
+                i += 1 
+            
+        else:
+            if(stopped_frames[i]-stopped_frames[i-1]) != 1 and len(temp_list_positions)>0:    
+                diff = stopped_frames[i]-stopped_frames[i-1]
+                for j in range(diff -1):
+                    elem = temp_list_positions.pop(0)
+
+                insert_index = list_positions.index(elem)
+                list_positions.insert(insert_index,elem)     
+                i += 1
+                if i < len(stopped_frames):
+                    while (stopped_frames[i]-stopped_frames[i-1]) == 1:
+                        list_positions.insert(insert_index,elem)
+                        i += 1 
+            else:
+                elem = temp_list_positions.pop(0)
+                insert_index = list_positions.index(elem)
+                list_positions.insert(insert_index,elem)       
+    del count_list_position
+   
+    #Defining time calculation class
     time_calculate = time_calculation.TimeCalculations()
     # Calculating average velocities exclusively for each user inputted frame
-    average_velocities = time_calculate.calculating_average_end_effector_speed(list_positions,time_vs_u,xs,zs)
+    average_speed_of_frames = time_calculate.calculating_average_end_effector_speed(list_position, time_vs_u,xs,zs)
+    
     first_frame_control = True
     cont = True
     frame_counter_control = True
-    i = 1 #average velocity counter
+    j = 1 #average velocity counter
     s = 0 #real frame counter including stop frames
     new_pos = 0
-    
+    i=1
     for pos in list_positions:
         enter = True
         # Start point of the choreography
-        if pos == list_positions[0]:
+        if s == 0:
             time_calculate.zeroth_frame()
             enter = False
-             
+            s += 1 
+        elif average_speed_of_frames[j] == 0:
+            times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
+            enter = False     
         
         # First user inputted frame
         elif pos == list_positions[1]:
@@ -194,10 +233,7 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
                         times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
                         stopped_frames.pop(0)
                         s += 1
-                        
-
-
-
+                  
             for frames in zero_end_velocity_frames:
                 if pos == frames:
                     end_velocity = float(0)

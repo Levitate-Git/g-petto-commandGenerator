@@ -83,6 +83,7 @@ class TimeCalculations:
                 b += 1
                 if average_speed_in_frame > self.max_speed:
                     raise ValueError (f"Error_Type=101,Frame={frame}")
+                    
                 self.average_speeds_of_frames.append(average_speed_in_frame)
         del a
         del b
