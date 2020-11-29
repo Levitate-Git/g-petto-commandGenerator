@@ -57,6 +57,9 @@ def motor_parameters_preperation(rope_parameters,time):
                 temp = int((125000)-1)
             else:
                 directions[i] = -int((abs(time[i]-time[i-1]))*1000)
+                while directions[i] < -60000:
+                    motor_parameters.append((step_values[i],temp,-60000))
+                    directions[i] = directions[i] + 60000
             
         motor_parameters.append((step_values[i],temp,directions[i]))
     
