@@ -156,9 +156,8 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
             while (stopped_frames[i]-stopped_frames[i-1]) == 1:
                 list_positions.insert(0,0)
                 i += 1 
-            
         else:
-            if(stopped_frames[i]-stopped_frames[i-1]) != 1 and len(temp_list_positions)>0:    
+            if(stopped_frames[i]-stopped_frames[i-1]) != 1 and len(temp_list_positions)>0 and i >0:    
                 diff = stopped_frames[i]-stopped_frames[i-1]
                 for j in range(diff -1):
                     elem = temp_list_positions.pop(0)
@@ -169,127 +168,54 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
                 if i < len(stopped_frames):
                     while (stopped_frames[i]-stopped_frames[i-1]) == 1:
                         list_positions.insert(insert_index,elem)
-                        i += 1 
+                        i += 1
+                        if i >= len(stopped_frames):
+                            break 
             else:
                 elem = temp_list_positions.pop(0)
                 insert_index = list_positions.index(elem)
-                list_positions.insert(insert_index,elem)       
+                list_positions.insert(insert_index,elem)   
+                i += 1
+                if i < len(stopped_frames):
+                      while (stopped_frames[i]-stopped_frames[i-1]) == 1:
+                        list_positions.insert(insert_index,elem)
+                        i += 1
+                        if i >= len(stopped_frames):
+                            break 
     del count_list_position
    
     #Defining time calculation class
     time_calculate = time_calculation.TimeCalculations()
     # Calculating average velocities exclusively for each user inputted frame
-    average_speed_of_frames = time_calculate.calculating_average_end_effector_speed(list_position, time_vs_u,xs,zs)
-    
-    first_frame_control = True
-    cont = True
-    frame_counter_control = True
-    j = 1 #average velocity counter
+    average_speed_of_frames = time_calculate.calculating_average_end_effector_speed(list_positions, time_vs_u,xs,zs)
+       
+    j = 0 #average velocity counter
     s = 0 #real frame counter including stop frames
-    new_pos = 0
-    i=1
     for pos in list_positions:
         enter = True
         # Start point of the choreography
         if s == 0:
             time_calculate.zeroth_frame()
             enter = False
-            s += 1 
+            s += 1
+        #if our frame is a stopped frame we determine it by using average velocities     
         elif average_speed_of_frames[j] == 0:
             times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-            enter = False     
-        
-        # First user inputted frame
-        elif pos == list_positions[1]:
-            end_velocity = average_velocities[i]     
-            if len(stopped_frames) > 0:
-                
-                if stopped_frames[0] == 0:
-                    # if we have a stopped frame at the very first frame
-                    times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-                    stopped_frames.pop(0)
-                    s += 1
-                    frame_counter_control = False
-                    
-                    while len(stopped_frames) > 0 and stopped_frames[0] == s:
-                        # If there are any other stopped frames just comes after from the very first frame.
-                        times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-                        stopped_frames.pop(0)
-                        s += 1
-                                               
-                    
-                
-                if len(stopped_frames) > 0 and stopped_frames[0] == s+1:
-                    end_velocity = float(0) # Because there is a stop frame after this frame end_velocity assigned as zero.
-                    times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions, end_velocity,time_vs_u,xs,zs)
-                    s += 1
-                    times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-                    stopped_frames.pop(0)
-                    s += 1
-                    frame_counter_control =False
-                    cont = False
-                    while len(stopped_frames) > 0 and stopped_frames[0] == s:
-                    # If there are any other stopped frames just comes after this frame.
-                        times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-                        stopped_frames.pop(0)
-                        s += 1
-                  
-            for frames in zero_end_velocity_frames:
-                if pos == frames:
-                    end_velocity = float(0)
-            
-            if cont:
-                times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions,end_velocity,time_vs_u,xs,zs)
-                s += 1
-            #if frame_counter_control:
-             #   s += 1
-            i += 1
             enter = False
-        # Last user inputted frame
-        elif pos == list_positions[-1]:
-            end_velocity = float(0) # because it is the last frame end_velocity assigned as zero.
-            times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions,end_velocity,time_vs_u,xs,zs)
-                     
-            while len(stopped_frames) > 0 :
-                # To control whether there are any stopped frames before last frame.
-                times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-                stopped_frames.pop(0)
-            
-            enter = False 
-            
-
-        
-        # Middle user inputted frames
-        # Computing for user inputted stop frames
-        elif len(stopped_frames)>0:
-            if stopped_frames[0] == s+1:
-                end_velocity = float(0) # Because there is a stop frame after this frame end_velocity assigned as zero.
-                times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions, end_velocity,time_vs_u,xs,zs)
-                s +=1
-                times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-                stopped_frames.pop(0)
-                s += 1
-                i += 1
-                
-                enter = False
-                while len(stopped_frames) > 0 and stopped_frames[0] == s:
-                # If there are any other stopped frames just comes after this frame.
-                    times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
-                    stopped_frames.pop(0)
-                    s += 1
-            
-
-        # Computing for standart frames
-        if enter:
-            end_velocity = average_velocities[i] 
-            for frames in zero_end_velocity_frames:
-                if pos == frames:
-                    end_velocity = float(0) 
-            
+            s += 1
+            j += 1     
+        else:
+            #İf there is a turn, stop or finish frame we finish movement with zero velocity
+            for zero_end_vel in zero_end_velocity_frames:
+                if zero_end_vel == pos or pos == list_positions[-1]:
+                    end_velocity = 0
+                    break
+                else:
+                    end_velocity = average_speed_of_frames[j]
             times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions, end_velocity,time_vs_u,xs,zs)
             s += 1
-            i += 1           
-        new_pos = pos
+            j += 1
+        
     print("SOLO MODE FINISHED")
     return times_and_velocities_for_end_effector
 
