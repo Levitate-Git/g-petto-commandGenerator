@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>buttons</class>
+ <widget class="QWidget" name="buttons">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>10</y>
+     <width>151</width>
+     <height>581</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetFixedSize</enum>
+        </property>
+        <item>
+         <widget class="QLabel" name="frame_dur_label">
+          <property name="text">
+           <string>Frame Duration</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="frame_dur_line"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="next_f_but">
+          <property name="text">
+           <string>Next Frame</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clear_f_but">
+          <property name="text">
+           <string>Clear Frame</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clear_all_but">
+          <property name="text">
+           <string>Clear All</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="rth_but">
+          <property name="text">
+           <string>RTH</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="done_but">
+          <property name="text">
+           <string>Done</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="import_but">
+          <property name="text">
+           <string>Import Last Values</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="mot2_label">
+          <property name="text">
+           <string>Motor2 Dist</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="mot2_line"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="mot3_label">
+          <property name="text">
+           <string>Motor3 Dist</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="mot3_line"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="mot4_label">
+          <property name="text">
+           <string>Motor4 Dist</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="mot4_line"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="height_label">
+          <property name="text">
+           <string>Height</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="height_line">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="solo_duo_box">
+          <item>
+           <property name="text">
+            <string>Solo-Solo-Solo-Solo</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Solo-Solo-Duo</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Solo-Duo-Solo</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Duo-Solo-Solo</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Duo-Duo</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="draw_back_but">
+          <property name="text">
+           <string>Draw BackGround</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="status_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="warn_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>next_f_but</sender>
+   <signal>clicked()</signal>
+   <receiver>buttons</receiver>
+   <slot>next_frame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>752</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>191</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clear_f_but</sender>
+   <signal>clicked()</signal>
+   <receiver>buttons</receiver>
+   <slot>clear_frame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>710</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>709</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clear_all_but</sender>
+   <signal>clicked()</signal>
+   <receiver>buttons</receiver>
+   <slot>clear_all()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>724</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>719</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rth_but</sender>
+   <signal>clicked()</signal>
+   <receiver>buttons</receiver>
+   <slot>rth_func()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>735</x>
+     <y>197</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>736</x>
+     <y>349</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>done_but</sender>
+   <signal>clicked()</signal>
+   <receiver>buttons</receiver>
+   <slot>done_func()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>743</x>
+     <y>232</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>760</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>draw_back_but</sender>
+   <signal>clicked()</signal>
+   <receiver>buttons</receiver>
+   <slot>draw_frame_background()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>701</x>
+     <y>541</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>473</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>import_but</sender>
+   <signal>clicked()</signal>
+   <receiver>buttons</receiver>
+   <slot>import_last_values()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>678</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>683</x>
+     <y>549</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mot2_line</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>buttons</receiver>
+   <slot>motor2_text_edit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>657</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>609</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mot3_line</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>buttons</receiver>
+   <slot>motor3_text_edit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>649</x>
+     <y>373</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>611</x>
+     <y>316</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mot4_line</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>buttons</receiver>
+   <slot>motor4_text_edit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>648</x>
+     <y>425</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>565</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>height_line</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>buttons</receiver>
+   <slot>height_text_edit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>652</x>
+     <y>477</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>568</x>
+     <y>426</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>solo_duo_box</sender>
+   <signal>editTextChanged(QString)</signal>
+   <receiver>buttons</receiver>
+   <slot>solo_duo_edit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>655</x>
+     <y>506</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>495</x>
+     <y>451</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>frame_dur_line</sender>
+   <signal>editingFinished()</signal>
+   <receiver>buttons</receiver>
+   <slot>frame_dur_line_edit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>675</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>596</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>next_frame()</slot>
+  <slot>clear_frame()</slot>
+  <slot>clear_all()</slot>
+  <slot>rth_func()</slot>
+  <slot>done_func()</slot>
+  <slot>draw_frame_background()</slot>
+  <slot>import_last_values()</slot>
+  <slot>motor2_text_edit()</slot>
+  <slot>motor3_text_edit()</slot>
+  <slot>motor4_text_edit()</slot>
+  <slot>height_text_edit()</slot>
+  <slot>solo_duo_edit()</slot>
+  <slot>frame_dur_line_edit()</slot>
+ </slots>
+</ui>
