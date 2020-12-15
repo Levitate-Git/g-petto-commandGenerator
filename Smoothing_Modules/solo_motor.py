@@ -48,7 +48,7 @@ def main(motor_coord,stopped_frames, usage, path, delta_ts, num_of_frames, max_x
         x_point_1d , z_point_1d , list_positions = d1_smoothing.populate_path(path,motor_coord)
     except Exception as e:
         error_occured = e
-        print("popolate_path function FAILED in solo_motor")
+        print("populate_path function FAILED in solo_motor")
         print(e)
         return error_occured
 

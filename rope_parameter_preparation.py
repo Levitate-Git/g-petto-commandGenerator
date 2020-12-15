@@ -38,6 +38,7 @@ def average_velocity_calculation(rope_vel_vs_time):
 def rope_parametes_in_meters_and_seconds(average_velocities,rope_length):
     rope_parameters = []
     k_values =[]
+    all_stop = False
     for k in range(1,len(rope_length)):
         if rope_length[k] == rope_length[k-1]:
             k_values.append(k)
@@ -45,33 +46,40 @@ def rope_parametes_in_meters_and_seconds(average_velocities,rope_length):
     while len(k_values)>0:
         rope_length.pop(k_values[-1])
         noUse = k_values.pop()
-
-
+    
     j = 0
-    while j < len(average_velocities):
-        if len(rope_length) > j:
-            
-            if type(average_velocities[j]) == list: # We added stop frames as lists to average_velocities
-                if j + 1  == len(rope_length):
-                    rope_length.insert(j,rope_length[j])
-                elif j == 0:
-                    while type(average_velocities[j]) == list:
-                        if j==0:
-                            pass
-                        else:
-                            rope_length.insert(j,rope_length[j-1])
-                        j += 1
-                else:
-                    rope_length.insert(j,rope_length[j-1]) # Adding stopped rope length to the list.
- 
-            j += 1    
+
+    if len(rope_length) ==1:
+        all_stop = True
+
+    if all_stop:
+        while len(average_velocities) != len(rope_length):
+            rope_length.append(rope_length[0])
+    else: 
+        while j < len(average_velocities):
+            if len(rope_length) > j:
                 
-        else:
-            
-            if type(average_velocities[j]) == list: # We added stop frames as lists to average_velocities
-                rope_length.append(rope_length[-1]) # Adding stopped rope length to the list.
-            j += 1    
-        
+                if type(average_velocities[j]) == list: # We added stop frames as lists to average_velocities
+                    if j + 1  == len(rope_length):
+                        rope_length.insert(j,rope_length[j])
+                    elif j == 0:
+                        while type(average_velocities[j]) == list:
+                            if j==0:
+                                pass
+                            else:
+                                rope_length.insert(j,rope_length[j-1])
+                            j += 1
+                    else:
+                        rope_length.insert(j,rope_length[j-1]) # Adding stopped rope length to the list.
+
+                j += 1    
+                    
+            else:
+                
+                if type(average_velocities[j]) == list: # We added stop frames as lists to average_velocities
+                    rope_length.append(rope_length[-1]) # Adding stopped rope length to the list.
+                j += 1    
+                
     k = 0    
 
     for k in range(len(rope_length)):

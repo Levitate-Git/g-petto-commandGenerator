@@ -27,27 +27,29 @@ def populate_path(path, motor_coord):
     zs = []
     list_positions = [0] 
     j = 0
-
-    for i in range(1,len(path)):
-        # Finding frame distance in order to determine how many sub-frames occurs in that user inputted frame by using "global_vars.DELTA_LENGTH" value 
-            # as a divider.
-        frame_distance = abs(path[i][1]-path[i-1][1])
-        divide_num = int(frame_distance / global_vars.DELTA_LENGTH)
-        
-        if i == len(path)-1:
-            # Take the last value if end of the spline.
-            zs_temp = np.linspace(path[i-1][1],path[i][1], divide_num, endpoint=True)
-        else:    
-            # Do not take last value to avoid duplication
-            zs_temp = np.linspace(path[i-1][1],path[i][1], divide_num, endpoint=False)
-        for z in zs_temp:
-            zs.append(z)
-            j += 1
-        # Determining a list of user inputted frames in populated spline
-        list_positions.append(j)
-    # Read just last member because j += 1 makes last member irrelevant
-    last_member = list_positions.pop()
-    list_positions.append(last_member-1)
+    if len(path)==1:
+        zs.append(path[0][1])
+    else:
+        for i in range(1,len(path)):
+            # Finding frame distance in order to determine how many sub-frames occurs in that user inputted frame by using "global_vars.DELTA_LENGTH" value 
+                # as a divider.
+            frame_distance = abs(path[i][1]-path[i-1][1])
+            divide_num = int(frame_distance / global_vars.DELTA_LENGTH)
+            
+            if i == len(path)-1:
+                # Take the last value if end of the spline.
+                zs_temp = np.linspace(path[i-1][1],path[i][1], divide_num, endpoint=True)
+            else:    
+                # Do not take last value to avoid duplication
+                zs_temp = np.linspace(path[i-1][1],path[i][1], divide_num, endpoint=False)
+            for z in zs_temp:
+                zs.append(z)
+                j += 1
+            # Determining a list of user inputted frames in populated spline
+            list_positions.append(j)
+        # Read just last member because j += 1 makes last member irrelevant
+        last_member = list_positions.pop()
+        list_positions.append(last_member-1)
     # Making a list of zeros as big as list(zs)
     xs = []
     for z in zs:
@@ -153,7 +155,7 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
         if i == 0 and stopped_frames[i] == 0:
             list_positions.insert(0,0)
             i += 1
-            while (stopped_frames[i]-stopped_frames[i-1]) == 1:
+            while i<len(stopped_frames) and (stopped_frames[i]-stopped_frames[i-1]) == 1:
                 list_positions.insert(0,0)
                 i += 1 
         else:
@@ -172,6 +174,8 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
                         if i >= len(stopped_frames):
                             break 
             else:
+                if i == 0  and stopped_frames[i]>1:
+                    elem = temp_list_positions.pop(0)
                 elem = temp_list_positions.pop(0)
                 insert_index = list_positions.index(elem)
                 list_positions.insert(insert_index,elem)   
