@@ -27,6 +27,7 @@ def populate_path(path, motor_coord):
     zs = []
     list_positions = [0] 
     j = 0
+<<<<<<< HEAD
 
     for i in range(1,len(path)):
         # Finding frame distance in order to determine how many sub-frames occurs in that user inputted frame by using "global_vars.DELTA_LENGTH" value 
@@ -48,6 +49,31 @@ def populate_path(path, motor_coord):
     # Read just last member because j += 1 makes last member irrelevant
     last_member = list_positions.pop()
     list_positions.append(last_member-1)
+=======
+    if len(path)==1:
+        zs.append(path[0][1])
+    else:
+        for i in range(1,len(path)):
+            # Finding frame distance in order to determine how many sub-frames occurs in that user inputted frame by using "global_vars.DELTA_LENGTH" value 
+                # as a divider.
+            frame_distance = abs(path[i][1]-path[i-1][1])
+            divide_num = int(frame_distance / global_vars.DELTA_LENGTH)
+            
+            if i == len(path)-1:
+                # Take the last value if end of the spline.
+                zs_temp = np.linspace(path[i-1][1],path[i][1], divide_num, endpoint=True)
+            else:    
+                # Do not take last value to avoid duplication
+                zs_temp = np.linspace(path[i-1][1],path[i][1], divide_num, endpoint=False)
+            for z in zs_temp:
+                zs.append(z)
+                j += 1
+            # Determining a list of user inputted frames in populated spline
+            list_positions.append(j)
+        # Read just last member because j += 1 makes last member irrelevant
+        last_member = list_positions.pop()
+        list_positions.append(last_member-1)
+>>>>>>> e79a7379c0d393e7a46b9141179923e07d0fc0c0
     # Making a list of zeros as big as list(zs)
     xs = []
     for z in zs:
@@ -141,6 +167,7 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
         times_and_velocities_for_end_effector : gives the list of time passed and velocities for end effector at each sub-frame
     
     """
+<<<<<<< HEAD
     
     time_calculate = time_calculation.TimeCalculations()
     # Calculating average velocities exclusively for each user inputted frame
@@ -254,6 +281,85 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
             s += 1
             i += 1           
         new_pos = pos
+=======
+    #Adding stopped_frames to list_positions
+    count_list_position = 1
+    temp_list_positions =[]
+    for pos in list_positions:
+        temp_list_positions.append(pos)
+    old_st_frame = 0
+    elem = temp_list_positions.pop(0)
+    i = 0
+    while i <len(stopped_frames):
+        if i == 0 and stopped_frames[i] == 0:
+            list_positions.insert(0,0)
+            i += 1
+            while i<len(stopped_frames) and (stopped_frames[i]-stopped_frames[i-1]) == 1:
+                list_positions.insert(0,0)
+                i += 1 
+        else:
+            if(stopped_frames[i]-stopped_frames[i-1]) != 1 and len(temp_list_positions)>0 and i >0:    
+                diff = stopped_frames[i]-stopped_frames[i-1]
+                for j in range(diff -1):
+                    elem = temp_list_positions.pop(0)
+
+                insert_index = list_positions.index(elem)
+                list_positions.insert(insert_index,elem)     
+                i += 1
+                if i < len(stopped_frames):
+                    while (stopped_frames[i]-stopped_frames[i-1]) == 1:
+                        list_positions.insert(insert_index,elem)
+                        i += 1
+                        if i >= len(stopped_frames):
+                            break 
+            else:
+                if i == 0  and stopped_frames[i]>1:
+                    elem = temp_list_positions.pop(0)
+                elem = temp_list_positions.pop(0)
+                insert_index = list_positions.index(elem)
+                list_positions.insert(insert_index,elem)   
+                i += 1
+                if i < len(stopped_frames):
+                      while (stopped_frames[i]-stopped_frames[i-1]) == 1:
+                        list_positions.insert(insert_index,elem)
+                        i += 1
+                        if i >= len(stopped_frames):
+                            break 
+    del count_list_position
+   
+    #Defining time calculation class
+    time_calculate = time_calculation.TimeCalculations()
+    # Calculating average velocities exclusively for each user inputted frame
+    average_speed_of_frames = time_calculate.calculating_average_end_effector_speed(list_positions, time_vs_u,xs,zs)
+       
+    j = 0 #average velocity counter
+    s = 0 #real frame counter including stop frames
+    for pos in list_positions:
+        enter = True
+        # Start point of the choreography
+        if s == 0:
+            time_calculate.zeroth_frame()
+            enter = False
+            s += 1
+        #if our frame is a stopped frame we determine it by using average velocities     
+        elif average_speed_of_frames[j] == 0:
+            times_and_velocities_for_end_effector = time_calculate.stopped_frame(time_vs_u)
+            enter = False
+            s += 1
+            j += 1     
+        else:
+            #İf there is a turn, stop or finish frame we finish movement with zero velocity
+            for zero_end_vel in zero_end_velocity_frames:
+                if zero_end_vel == pos or pos == list_positions[-1]:
+                    end_velocity = 0
+                    break
+                else:
+                    end_velocity = average_speed_of_frames[j]
+            times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions, end_velocity,time_vs_u,xs,zs)
+            s += 1
+            j += 1
+        
+>>>>>>> e79a7379c0d393e7a46b9141179923e07d0fc0c0
     print("SOLO MODE FINISHED")
     return times_and_velocities_for_end_effector
 

@@ -45,10 +45,10 @@ def rope_parametes_in_meters_and_seconds(average_velocities,rope_length):
     while len(k_values)>0:
         rope_length.pop(k_values[-1])
         noUse = k_values.pop()
+<<<<<<< HEAD
 
 
     j = 0
-    while j < len(average_velocities):
         if len(rope_length) > j:
             
             if type(average_velocities[j]) == list: # We added stop frames as lists to average_velocities
@@ -72,10 +72,10 @@ def rope_parametes_in_meters_and_seconds(average_velocities,rope_length):
                 rope_length.append(rope_length[-1]) # Adding stopped rope length to the list.
             j += 1    
         
-    k = 0    
+=======
+    
+    j = 0
 
-    for k in range(len(rope_length)):
-        
         rope_parameters.append((rope_length[k],average_velocities[k]))
     
     return rope_parameters
