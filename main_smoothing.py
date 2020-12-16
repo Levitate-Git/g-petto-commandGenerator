@@ -142,10 +142,10 @@ def manupulating_user_input(np_paths):
             frame = popped_frames[j]
             length = len(path) - 1
 
-            if frame == length:
-                path.pop(frame-1)
-            else:
-                path.pop(frame) 
+            #if frame == length:
+            #    path.pop(frame-1)
+            #else:
+            path.pop(frame) 
 
         j = 0    
         popped_frames.clear()

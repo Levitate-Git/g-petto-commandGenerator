@@ -12,7 +12,7 @@ WIDTH = 800
 DELTA_W = 200
 HEIGHT = 600
 RECT_DIM = 8
-POINT_R = 0.06
+POINT_R = 0.06 #determining if a frame is a stopped frame or not. In meters
 MAX_LEN_IN_M = 0.5
 
 NUM_OF_MOTORS = 4
@@ -35,7 +35,7 @@ DELTA_LENGTH = 0.02 #m
 MAX_SPEED_IN_METERS = 0.45 #m/s
 MIN_SPEED_IN_METERS = -0.45 #m/s
 
-OFFLINE_ONLINE = 0 # 1: ONLINE 0: OFFLINE
+OFFLINE_ONLINE = 1 # 1: ONLINE 0: OFFLINE
 
 """
 class webApp:

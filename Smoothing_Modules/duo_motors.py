@@ -62,6 +62,7 @@ def main(mot_coords,stopped_frames, usage, np_paths, delta_ts, num_of_frames, ma
     except Exception as e:
         error_occured = e
         print("make_spline function FAILED in duo_motor")
+        print("Error_Type=201, Please enter more than 4 frames or you entered all frames at the same place at DUO mode")
         print(e)
         return error_occured
     
