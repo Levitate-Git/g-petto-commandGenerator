@@ -83,7 +83,10 @@ class TimeCalculations:
                 b += 1
                 if average_speed_in_frame > self.max_speed:
                     raise ValueError (f"Error_Type=101,Frame={frame}")
+<<<<<<< HEAD
+=======
                     
+>>>>>>> e79a7379c0d393e7a46b9141179923e07d0fc0c0
                 self.average_speeds_of_frames.append(average_speed_in_frame)
         del a
         del b
@@ -189,7 +192,11 @@ class TimeCalculations:
                 else:
                     time_at_sub_frame = min(temp)
             else:
+<<<<<<< HEAD
+                raise ValueError (f"Error_Type=103,Frame={self.i}")
+=======
                 raise ValueError (f"Error_Type=104,Frame={self.i}")
+>>>>>>> e79a7379c0d393e7a46b9141179923e07d0fc0c0
             del temp2
             np_coefs.clear()
             temp.clear()
@@ -201,7 +208,11 @@ class TimeCalculations:
             if abs(control_acceleration) > self.max_acceleration:
                 raise ValueError (f"Error_Type=102,Frame={self.i}")
             if abs(velocity) > self.max_speed:
+<<<<<<< HEAD
+                raise ValueError (f"Error_Type=101,Frame={self.i}")
+=======
                 raise ValueError (f"Error_Type=103,Frame={self.i}")
+>>>>>>> e79a7379c0d393e7a46b9141179923e07d0fc0c0
             
             self.times_of_intervals.append(self.total_time_passed + time_at_sub_frame)
             self.velocities.append(velocity)
@@ -271,7 +282,10 @@ class TimeCalculations:
         self.i += 1
         self.times_and_velocities_for_end_effector.append((self.times_of_intervals[-1],"stop"))
         
+<<<<<<< HEAD
+=======
         print("Stopped Frame calculated")
+>>>>>>> e79a7379c0d393e7a46b9141179923e07d0fc0c0
         return self.times_and_velocities_for_end_effector
     
     def zeroth_frame(self):
