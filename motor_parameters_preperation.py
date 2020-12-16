@@ -11,81 +11,85 @@ def motor_parameters_preperation(rope_parameters,time):
     motor_parameters=[]
     velocities_in_sps = [0]
     step_values = []
+    if rope_parameters[0] == "ALL_STOPPED":
+        pass
+    else:    
+        for i in range(len(rope_parameters)):
+        # Rope Length to Step  
+            length_in_meters = rope_parameters[i][0]
+            step_value = int((length_in_meters / (2*pi*makara_radius))*one_turn_steps)
+            step_values.append(step_value)
     
-
-    for i in range(len(rope_parameters)):
-    # Rope Length to Step  
-        length_in_meters = rope_parameters[i][0]
-        step_value = int((length_in_meters / (2*pi*makara_radius))*one_turn_steps)
-        step_values.append(step_value)
- 
-    # Rope Velocity to SPS(Step Per Second)
-    if len(time) == len(step_values):
-        for i in range(1,len(step_values)):
-            velocity_in_sps_before = (step_values[i]-step_values[i-1])/(time[i]-time[i-1])
-            velocity_in_sps = int(abs(velocity_in_sps_before) + 0.5)
-            velocities_in_sps.append(velocity_in_sps)
-    else:
-        print("Length of time list and step list are not equal!")
-        raise ValueError
-    
-    
-    if type(rope_parameters[0][1]) == list: 
-        directions=[-rope_parameters[0][1][1]]
-    else :
-        directions = [1]
-    for i in range(1,len(step_values)):
-        if step_values[i] > step_values[i-1] :
-            directions.append(1) # prop going downward
-        elif step_values[i] < step_values[i-1] :
-            directions.append(0) # prop going upward
+        # Rope Velocity to SPS(Step Per Second)
+        if len(time) == len(step_values):
+            for i in range(1,len(step_values)):
+                velocity_in_sps_before = (step_values[i]-step_values[i-1])/(time[i]-time[i-1])
+                velocity_in_sps = int(abs(velocity_in_sps_before) + 0.5)
+                velocities_in_sps.append(velocity_in_sps)
         else:
-            if type(rope_parameters[i][1]) == list: # When user inputted a stop frame
-                directions.append(-rope_parameters[i][1][1])
+            print("Length of time list and step list are not equal!")
+            raise ValueError
+        
+        
+        if type(rope_parameters[0][1]) == list: 
+            directions=[-rope_parameters[0][1][1]]
+        else :
+            directions = [1]
+        for i in range(1,len(step_values)):
+            if step_values[i] > step_values[i-1] :
+                directions.append(1) # prop going downward
+            elif step_values[i] < step_values[i-1] :
+                directions.append(0) # prop going upward
             else:
-                directions.append(0)
-    
-    for i in range(len(step_values)):
-        try:
-            if velocities_in_sps[i] <=2 and velocities_in_sps[i] > 0 :
-                temp = int((125000/2)-1)
-            else:
-                temp = int((125000/velocities_in_sps[i])-1)
-        except ZeroDivisionError:
-            temp = 0
-            if i == 0:
-                temp = int((125000)-1)
-            else:
-                directions[i] = -int((abs(time[i]-time[i-1]))*1000)
-            
-        motor_parameters.append((step_values[i],temp,directions[i]))
-    
-    if step_values[0] > step_values[-1]:
-        try:
-            temp = int(125000/velocities_in_sps[1]-1)
-        except ZeroDivisionError:
-            zero = 1
-            while velocities_in_sps[zero] == 0:
-                zero += 1
-            temp = int(125000/velocities_in_sps[zero]-1)
-        motor_parameters.append((step_values[0],temp,1))
-    elif step_values[0] < step_values[-1]:
-        try:
-            temp = int(125000/velocities_in_sps[1]-1)
-        except ZeroDivisionError:
-            zero = 1
-            while velocities_in_sps[zero] == 0:
-                zero += 1
-            temp = int(125000/velocities_in_sps[zero]-1)
-        motor_parameters.append((step_values[0],temp,0))
-    
-    del temp
-    
-    # Adding a frame if first frame is a stopped one.
-    if motor_parameters[0][2] < 0:
-        temp = (motor_parameters[0][0],motor_parameters[0][1],int(motor_parameters[0][2]*1000))
-        motor_parameters.insert(1,temp)
-    return motor_parameters
+                if type(rope_parameters[i][1]) == list: # When user inputted a stop frame
+                    directions.append(-rope_parameters[i][1][1])
+                else:
+                    directions.append(0)
+        
+        for i in range(len(step_values)):
+            try:
+                if velocities_in_sps[i] <=2 and velocities_in_sps[i] > 0 :
+                    temp = int((125000/2)-1)
+                else:
+                    temp = int((125000/velocities_in_sps[i])-1)
+            except ZeroDivisionError:
+                temp = 0
+                if i == 0:
+                    temp = int((125000)-1)
+                else:
+                    directions[i] = -int((abs(time[i]-time[i-1]))*1000)
+                    while directions[i] < -60000:
+                        motor_parameters.append((step_values[i],temp,-60000))
+                        directions[i] = directions[i] + 60000
+                
+            motor_parameters.append((step_values[i],temp,directions[i]))
+        
+        if step_values[0] > step_values[-1]:
+            try:
+                temp = int(125000/velocities_in_sps[1]-1)
+            except ZeroDivisionError:
+                zero = 1
+                while velocities_in_sps[zero] == 0:
+                    zero += 1
+                temp = int(125000/velocities_in_sps[zero]-1)
+            motor_parameters.append((step_values[0],temp,1))
+        elif step_values[0] < step_values[-1]:
+            try:
+                temp = int(125000/velocities_in_sps[1]-1)
+            except ZeroDivisionError:
+                zero = 1
+                while velocities_in_sps[zero] == 0:
+                    zero += 1
+                temp = int(125000/velocities_in_sps[zero]-1)
+            motor_parameters.append((step_values[0],temp,0))
+        
+        del temp
+        
+        # Adding a frame if first frame is a stopped one.
+        if motor_parameters[0][2] < 0:
+            temp = (motor_parameters[0][0],motor_parameters[0][1],int(motor_parameters[0][2]*1000))
+            motor_parameters.insert(1,temp)
+        return motor_parameters
 
 def writing_motor_params(usage,motor_parameters, file_name="deneme.txt"):
     """
