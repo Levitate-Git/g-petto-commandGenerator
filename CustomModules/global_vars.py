@@ -15,7 +15,7 @@ RECT_DIM = 8
 POINT_R = 0.06 #determining if a frame is a stopped frame or not. In meters
 MAX_LEN_IN_M = 0.5
 
-NUM_OF_MOTORS = 4
+NUM_OF_MOTORS = [] 
 HOME_POS_ROPE_LEN = [0, 0, 0, 0]
 HOME_TO_P0_TIME = 0
 
@@ -35,7 +35,7 @@ DELTA_LENGTH = 0.02 #m
 MAX_SPEED_IN_METERS = 0.45 #m/s
 MIN_SPEED_IN_METERS = -0.45 #m/s
 
-OFFLINE_ONLINE = 1 # 1: ONLINE 0: OFFLINE
+OFFLINE_ONLINE = 0 # 1: ONLINE 0: OFFLINE
 
 """
 class webApp:

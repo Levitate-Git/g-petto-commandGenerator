@@ -49,7 +49,7 @@ def read_user_input():
             #first line has configuration data formatted like
             # usage num_of_frames rth_enabled motor1_coord ...
             if i == 0:
-                num_of_frames = int (words_in_line[1])
+                num_of_frames = int (words_in_line[2])
                 #last two words are the motor4 coords,
                 #which is fartest from origin so take their values to plot graph limits
                 max_x = float(words_in_line[-2])
@@ -99,11 +99,14 @@ def get_motor_coords():
     with open(input_path + rev_Id +"-frame_points.txt", "r") as file1:
         line0 = file1.readline().strip().split(" ")
         print(line0)
-        usage = line0[0]
+        global_vars.NUM_OF_MOTORS.clear()
+        global_vars.NUM_OF_MOTORS.append(line0[0])
+        usage = line0[1]
         mot_coords = []
-        for i in range(global_vars.NUM_OF_MOTORS):
-            temp1 = float(line0[i*2 + 2])
-            temp2 = float(line0[i*2 + 3])
+        for i in range(4):
+            # We use range(4) because we always solve it as 4 motor system
+            temp1 = float(line0[i*2 + 3])
+            temp2 = float(line0[i*2 + 4])
             mot_coords.append((temp1,temp2))
         
         del temp1

@@ -24,6 +24,7 @@ def writing_json_file(total_frame_amount,combination, frame_amount, all_motor_pa
     counter = 0
     json_num = 0
     k = 0
+    motors = global_vars.NUM_OF_MOTORS[0]
     for j in range(json_file_amount):
         
         if remaining_frame_amount > 100:
@@ -40,6 +41,7 @@ def writing_json_file(total_frame_amount,combination, frame_amount, all_motor_pa
         with open(file_name + "_" +str(json_num) + ".json", "w") as file:
             file.write ("{" + "\n" \
                         '"combination": ' + str(combination) + "," +"\n" \
+                        '"motors": ' + str(motors) + "," +"\n" \
                         '"total_frames_0": ' + str(frame_amount[0][1]) + "," +"\n" \
                         '"total_frames_1": ' + str(frame_amount[1][1]) + "," +"\n" \
                         '"total_frames_2": ' + str(frame_amount[2][1]) + "," +"\n" \
