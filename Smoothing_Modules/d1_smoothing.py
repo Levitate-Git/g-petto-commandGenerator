@@ -210,12 +210,17 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
             j += 1     
         else:
             #İf there is a turn, stop or finish frame we finish movement with zero velocity
+            
             for zero_end_vel in zero_end_velocity_frames:
                 if zero_end_vel == pos or pos == list_positions[-1]:
                     end_velocity = 0
                     break
                 else:
                     end_velocity = average_speed_of_frames[j]
+            if s<(len(list_positions)-1):
+                if list_positions[s] == list_positions[s+1]:
+                    end_velocity = 0
+
             times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions, end_velocity,time_vs_u,xs,zs)
             s += 1
             j += 1
