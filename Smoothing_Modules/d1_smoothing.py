@@ -148,7 +148,7 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
     temp_list_positions =[]
     for pos in list_positions:
         temp_list_positions.append(pos)
-    old_st_frame = 0
+
     elem = temp_list_positions.pop(0)
     i = 0
     while i <len(stopped_frames):
@@ -175,7 +175,8 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
                             break 
             else:
                 if i == 0  and stopped_frames[i]>1:
-                    elem = temp_list_positions.pop(0)
+                    for k in range(stopped_frames[i]-1):
+                        elem = temp_list_positions.pop(0)
                 elem = temp_list_positions.pop(0)
                 insert_index = list_positions.index(elem)
                 list_positions.insert(insert_index,elem)   
@@ -224,7 +225,9 @@ def time_calculations(xs,zs, zero_end_velocity_frames,list_positions, time_vs_u,
             times_and_velocities_for_end_effector = time_calculate.solving_with_jerk_control(pos,list_positions, end_velocity,time_vs_u,xs,zs)
             s += 1
             j += 1
-        
+
+    #for x in times_and_velocities_for_end_effector:
+    #   print(x)    
     print("SOLO MODE FINISHED")
     return times_and_velocities_for_end_effector
 
