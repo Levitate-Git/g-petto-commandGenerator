@@ -18,7 +18,6 @@ else:
     input_path = ""
     output_path = ""
 
-
 def main():
     if on_off:
         failure = main_smoothing.main()

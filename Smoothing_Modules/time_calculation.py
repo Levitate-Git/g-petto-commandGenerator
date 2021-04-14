@@ -107,7 +107,7 @@ class TimeCalculations:
             end_velocity : float type
                 End velocity of the frame which is calculating. 
 
-            time vs_u : list type
+            time_vs_u : list type
                 Time values corresponding u values as user inputted.
             
             xs : list type
@@ -123,11 +123,11 @@ class TimeCalculations:
             
             Errors
             ------
-            Error_Type: 101 
-                Max speed limit is exceeding please increase the frame time
             Error_Type: 102 
                 Max speed limit is exceeding please increase the frame time
-            Error_Type: 103
+            Error_Type: 103 
+                Max speed limit is exceeding please increase the frame time
+            Error_Type: 104
                 There are no real roots to compute this frame's velocties.
         """
         
@@ -161,6 +161,7 @@ class TimeCalculations:
         all_roots = []
         total_length = 0
         old_velocity = velocity
+        time_at_sub_frames = [0]
 
         while self.k < (pos + 1) and (self.k-1) < list_position[-1]:
             length_of_interval = ( (xs[self.k]-xs[self.k-1])**2 + (zs[self.k]-zs[self.k-1])**2 )**0.5
@@ -203,6 +204,7 @@ class TimeCalculations:
             if abs(velocity) > self.max_speed:
                 raise ValueError (f"Error_Type=103,Frame={self.i}")
             
+            time_at_sub_frames.append(time_at_sub_frame)
             self.times_of_intervals.append(self.total_time_passed + time_at_sub_frame)
             self.velocities.append(velocity)
             self.k += 1
@@ -228,6 +230,7 @@ class TimeCalculations:
             print("There is something wrong with the length of time arrivals-- double_acceleration_within_a_frame in TimeCalculations class")
         self.i += 1
         
+        del time_at_sub_frames
         del old_velocity
         del velocity
         del b_element
