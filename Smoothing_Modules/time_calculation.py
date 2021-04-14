@@ -198,7 +198,7 @@ class TimeCalculations:
             # Solving velocity as a definite integral
             velocity = self.start_velocity + b_element * (time_at_sub_frame**2) /2 + c_element * (time_at_sub_frame)
             # Controlling maximum velocity and acceleration
-            control_acceleration = 0 # (velocity - old_velocity) / (time_at_sub_frame - time_at_sub_frames[-1])
+            control_acceleration = (velocity - old_velocity) / self.delta_t
             if abs(control_acceleration) > self.max_acceleration:
                 raise ValueError (f"Error_Type=102,Frame={self.i}")
             if abs(velocity) > self.max_speed:
